@@ -11,26 +11,26 @@ struct Cli {
     website_url: Option<String>, // Changed to Option to allow for user input
     // Option to list restricted URLs
     #[structopt(short, long)]
-    list: bool, // New field for listing URLs
+        list: bool, // New field for listing URLs
 }
 
 fn main() {
     let cli_arguments = Cli::from_args();
 
     // If the list option is provided, display the restricted websitess
-    if cli_arguments.list {
-        list_restricted_websites().expect("Failed to read restricted Websites");
-        return; // End statement
-    }
-
-    let mut website_to_restrict = match cli_arguments.website_url {
-        Some(url) => url,
-        None => {
-            let mut input = String::new();
-            println!("Please enter the website URL you want to restrict:");
-            stdin().read_line(&mut input).expect("Failed to read website");
-            input.trim().to_string() // Trim whitespace and return
+        if cli_arguments.list {
+            list_restricted_websites().expect("Failed to read restricted Websites");
+            return; // End statement
         }
+    
+        let mut website_to_restrict = match cli_arguments.website_url {
+            Some(url) => url,
+            None => {
+                let mut input = String::new();
+                println!("Please enter the website URL you want to restrict:");
+                stdin().read_line(&mut input).expect("Failed to read website");
+                input.trim().to_string() // Trim whitespace and return
+            }
     };
 
     // Loop until a valid URL website is entered
